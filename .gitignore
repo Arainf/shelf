@@ -1,0 +1,24 @@
+# --- OS & System Files ---
+.DS_Store
+Thumbs.db
+*.log
+
+# --- IDEs and Editors ---
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+
+# --- Package Manager & Tooling Toolchains ---
+node_modules/
+.turbo/
+
+# --- Environment & Secrets ---
+.env
+.env.local
+.env.*.local
+
