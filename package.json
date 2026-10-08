@@ -16,7 +16,10 @@
     "turbo": "^2.11.7"
   },
   "scripts": {
-    "dev": "turbo run dev"
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint"
   },
   "workspaces": [
     "apps/*"
