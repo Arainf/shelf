@@ -22,3 +22,10 @@ node_modules/
 .env.local
 .env.*.local
 
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+
+dist/
+
+backups/
