@@ -1,10 +1,13 @@
 import { Module } from '@nestjs/common';
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {ConfigModule, ConfigService} from "@nestjs/config";
-import { validate} from "./config/env.validation.js";
+import { validate } from "./config/env.validation.js";
+import { HealthController } from "./health.controller.js";
+import { AuthModule } from './auth/auth.module.js';
+import { APP_GUARD } from "@nestjs/core";
+import {JwtAuthGuard} from "./auth/guards/jwt-auth.guard.js";
+import {RolesGuard} from "./auth/guards/roles.guard.js";
 
-import {AppController} from "@nestjs/schematics/dist/lib/application/files/ts/src/app.controller.js";
-import {HealthController} from "./health.controller.js";
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -20,12 +23,23 @@ import {HealthController} from "./health.controller.js";
       synchronize: false,
       autoLoadEntities: true,
       prepareDatabase: (db) => {
-        db.pragma('foreign_key = ON');
-        db.pragma('journal_mode = ON');
+        db.pragma('foreign_keys = ON');
+        db.pragma('journal_mode = WAL');
       }
     })
   }),
+  AuthModule,
   ],
   controllers: [HealthController],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    }
+  ]
 })
 export class AppModule {}
