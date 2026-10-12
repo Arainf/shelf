@@ -1,3 +1,7 @@
+
+
+
+
 export class ApiError extends Error {
     constructor(
         public status: number,
@@ -56,6 +60,43 @@ export interface HealthResponse {
     timestamp: string;
 }
 
+
+export interface Unit {
+    id: string;
+    name: string;
+    symbol: string;
+}
+
+export interface ProductUnit {
+    id: string;
+    conversionFactor: number;
+    isBase: boolean;
+    price: number;
+    costPrice?: number;
+    unit: Unit;
+}
+
+export interface Variant {
+    id: string;
+    name: string;
+    sku?: string;
+    units: ProductUnit[];
+}
+
+export interface Product {
+    id: string;
+    name: string;
+    description?: string;
+    variants: Variant[];
+}
+
+
 export const api = {
     getHealth: () => request<HealthResponse>('/health'),
+    getUnits: () => request<Unit[]>('/catalog/units'),
+    createUnit: (data: { name: string; symbol: string; }) =>
+        request<Unit>('/catalog/units', { method: 'POST', body: JSON.stringify(data) }),
+    getProducts: () => request<ProductUnit[]>('/catalog/products'),
+    createProduct: (data: any) =>
+        request<Product>('/catalog/products', { method: 'POST', body: JSON.stringify(data) }),
 }

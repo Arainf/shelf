@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { api, type HealthResponse } from './api/client';
+import {CatalogPage} from "./CatalogPage.tsx";
 
 function HealthDashboard() {
   const [health, setHealth] = useState<HealthResponse | null>(null);
@@ -77,6 +78,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HealthDashboard />} />
+          <Route path="/catalog" element={<CatalogPage />} />
         </Routes>
       </BrowserRouter>
   );
